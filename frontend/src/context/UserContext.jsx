@@ -1,18 +1,19 @@
 import { createContext, useState, useEffect } from "react";
 import axios from "axios";
-import { AppContext } from "./AppContext";
 
 export const UserContext = createContext();
 
 const UserContextProvider = (props) => {
-    const { backendUrl } = props; // Get backendUrl from AppContext
+    const { backendUrl } = props;
     const [token, setToken] = useState(localStorage.getItem('token') || null);
     const [userData, setUserData] = useState(null);
 
-    // Load user profile when token exists
+    // Load user profile whenever token changes
     useEffect(() => {
         if (token) {
             loadUserProfile();
+        } else {
+            setUserData(null);
         }
     }, [token]);
 
@@ -26,7 +27,6 @@ const UserContextProvider = (props) => {
             }
         } catch (error) {
             console.error('Failed to load user profile:', error);
-            // If token is invalid, clear it
             if (error.response?.status === 401) {
                 logout();
             }
@@ -47,6 +47,7 @@ const UserContextProvider = (props) => {
     const value = {
         token,
         userData,
+        setUserData,       // ← exposed so MyProfile can do optimistic updates
         login,
         logout,
         loadUserProfile,
@@ -61,6 +62,3 @@ const UserContextProvider = (props) => {
 };
 
 export default UserContextProvider;
-
-
-
