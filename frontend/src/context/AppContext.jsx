@@ -9,6 +9,28 @@ const AppContextProvider = (props) => {
     const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:4000'
 
     const [doctors, setDoctors] = useState([])
+    const [isDarkMode, setIsDarkMode] = useState(() => {
+        // Initial state from localStorage or system preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            return savedTheme === 'dark';
+        }
+        return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    })
+
+    const toggleDarkMode = () => {
+        setIsDarkMode(prev => !prev);
+    }
+
+    useEffect(() => {
+        if (isDarkMode) {
+            document.documentElement.classList.add('dark');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+            localStorage.setItem('theme', 'light');
+        }
+    }, [isDarkMode])
 
     const getDoctorsData = async () => {
         try {
@@ -31,7 +53,9 @@ const AppContextProvider = (props) => {
         doctors,
         currencySymbol,
         backendUrl,
-        getDoctorsData
+        getDoctorsData,
+        isDarkMode,
+        toggleDarkMode
     }
 
     return (

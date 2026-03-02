@@ -5,10 +5,10 @@ import { motion } from 'framer-motion'
 const Header = () => {
     return (
         <div className='relative pt-10'>
-            <div className='flex flex-col md:flex-row flex-wrap bg-mint-light rounded-3xl px-6 md:px-10 lg:px-20 overflow-hidden relative'>
+            <div className='flex flex-col md:flex-row flex-wrap bg-mint-light rounded-3xl px-6 md:px-10 lg:px-20 overflow-hidden relative dark:bg-night-surface/50'>
                 
                 {/* Decorative Grid Background */}
-                <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
+                <div className="absolute inset-0 opacity-[0.03] pointer-events-none dark:opacity-[0.05]" 
                      style={{ backgroundImage: 'linear-gradient(#059669 1px, transparent 1px), linear-gradient(90deg, #059669 1px, transparent 1px)', backgroundSize: '40px 40px' }}>
                 </div>
 
@@ -21,7 +21,7 @@ const Header = () => {
                         viewport={{ once: true }}
                     >
                         <p className='text-primary font-bold tracking-wider text-sm mb-2'>WELCOME TO MEDISYNC</p>
-                        <h1 className='text-4xl md:text-5xl lg:text-6xl text-text-dark font-display font-bold leading-tight'>
+                        <h1 className='text-4xl md:text-5xl lg:text-6xl text-text-dark font-display font-bold leading-tight dark:text-night-text'>
                             Next Gen <br /> 
                             <span className="text-primary">OPD Booking</span>
                         </h1>
@@ -32,9 +32,9 @@ const Header = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
                         viewport={{ once: true }}
-                        className='flex flex-col md:flex-row items-center gap-4 text-text-muted text-sm font-light'
+                        className='flex flex-col md:flex-row items-center gap-4 text-text-muted text-sm font-light dark:text-night-text-muted'
                     >
-                        <img className='w-28' src={assets.group_profiles} alt="" />
+                        <img className='w-28 dark:opacity-80' src={assets.group_profiles} alt="" />
                         <p>Check out our curated selection of reliable doctors, <br className='hidden sm:block' />  and schedule your visit in seconds.</p>
                     </motion.div>
 

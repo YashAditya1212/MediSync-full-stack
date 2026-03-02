@@ -1,12 +1,89 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-*{
-    font-family: Outfit;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-::-webkit-scrollbar{
-    display: none;
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #080d1a;
+  color: #f1f5f9;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: #080d1a;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.1);
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0,212,170,0.4);
+}
+
+/* Input/select dark styling */
+input, select, textarea {
+  background-color: #0e1525 !important;
+  color: #f1f5f9 !important;
+  border-color: rgba(255,255,255,0.08) !important;
+}
+input::placeholder, textarea::placeholder {
+  color: #475569 !important;
+}
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: rgba(0,212,170,0.5) !important;
+  box-shadow: 0 0 0 2px rgba(0,212,170,0.1);
+}
+
+/* Select option */
+option {
+  background-color: #0e1525;
+  color: #f1f5f9;
+}
+
+/* Toast override for dark theme */
+.Toastify__toast {
+  background: #131d2e !important;
+  color: #f1f5f9 !important;
+  border: 1px solid rgba(255,255,255,0.07) !important;
+}
+
+@layer components {
+  .stat-card {
+    @apply bg-dark-card border border-dark-border rounded-xl p-5 hover:bg-dark-hover transition-all duration-200;
+  }
+  .data-table-row {
+    @apply grid items-center py-3 px-5 border-b border-dark-border hover:bg-dark-hover transition-colors text-sm text-ink-mid;
+  }
+  .badge {
+    @apply text-xs px-2.5 py-0.5 rounded-full font-medium;
+  }
+  .form-input {
+    @apply w-full bg-dark-elevated border border-dark-border rounded-lg px-3 py-2.5 text-ink-bright text-sm focus:border-primary-border focus:outline-none transition-colors;
+  }
+  .form-label {
+    @apply text-xs font-medium text-ink-mid uppercase tracking-wider mb-1.5 block;
+  }
+  .btn-primary {
+    @apply bg-primary text-dark-base font-semibold px-5 py-2.5 rounded-lg hover:opacity-90 transition-opacity text-sm;
+  }
+  .btn-ghost {
+    @apply border border-dark-border text-ink-mid px-5 py-2.5 rounded-lg hover:bg-dark-elevated transition-colors text-sm;
+  }
+  .section-title {
+    @apply text-lg font-semibold text-ink-bright;
+  }
 }

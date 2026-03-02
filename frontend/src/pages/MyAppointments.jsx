@@ -124,20 +124,20 @@ const MyAppointments = () => {
     if (loading) {
         return (
             <div className='flex items-center justify-center min-h-[60vh]'>
-                <p className='text-text-medium text-lg'>Loading appointments...</p>
+                <p className='text-text-medium text-lg dark:text-night-text-muted'>Loading appointments...</p>
             </div>
         )
     }
 
     return (
-        <div>
-            <p className='pb-3 mt-12 font-bold text-2xl text-text-dark border-b border-white/30'>
+        <div className='dark:text-night-text'>
+            <p className='pb-3 mt-12 font-bold text-2xl text-text-dark border-b border-white/30 dark:text-night-text dark:border-night-border'>
                 My Appointments
             </p>
 
             {appointments.length === 0 ? (
                 <div className='flex flex-col items-center justify-center min-h-[40vh] gap-4'>
-                    <p className='text-text-medium text-lg'>No appointments yet</p>
+                    <p className='text-text-medium text-lg dark:text-night-text-muted'>No appointments yet</p>
                     <button
                         onClick={() => navigate('/doctors')}
                         className='bg-primary text-white px-8 py-3 rounded-full hover:bg-primary-dark transition-all font-semibold'
@@ -150,10 +150,10 @@ const MyAppointments = () => {
                     {appointments.map((item, index) => (
                         <div
                             key={index}
-                            className='glass-card grid grid-cols-[1fr_2fr] gap-4 sm:flex sm:gap-6 py-4 rounded-xl px-4'
+                            className='glass-card grid grid-cols-[1fr_2fr] gap-4 sm:flex sm:gap-6 py-4 rounded-xl px-4 dark:bg-night-surface/50 dark:border-night-border'
                         >
                             {/* Doctor Image */}
-                            <div>
+                            <div className='dark:bg-night-bg rounded-xl overflow-hidden'>
                                 <img
                                     className='w-32 bg-primary/5 rounded-xl shadow-card'
                                     src={item.docData?.image}
@@ -162,31 +162,31 @@ const MyAppointments = () => {
                             </div>
 
                             {/* Appointment Details */}
-                            <div className='flex-1 text-sm text-text-medium'>
-                                <p className='text-text-dark font-bold text-lg'>{item.docData?.name}</p>
-                                <p className='text-primary font-semibold mt-1'>{item.docData?.speciality}</p>
-                                <p className='text-text-dark font-semibold mt-2'>Address:</p>
+                            <div className='flex-1 text-sm text-text-medium dark:text-night-text-muted'>
+                                <p className='text-text-dark font-bold text-lg dark:text-night-text'>{item.docData?.name}</p>
+                                <p className='text-primary font-semibold mt-1 dark:text-accent'>{item.docData?.speciality}</p>
+                                <p className='text-text-dark font-semibold mt-2 dark:text-night-text'>Address:</p>
                                 <p className='text-xs'>{item.docData?.address?.line1}</p>
                                 <p className='text-xs'>{item.docData?.address?.line2}</p>
                                 <p className='text-xs mt-2'>
-                                    <span className='text-sm text-text-dark font-semibold'>Date & Time: </span>
-                                    <span className='text-primary font-semibold'>
+                                    <span className='text-sm text-text-dark font-semibold dark:text-night-text'>Date & Time: </span>
+                                    <span className='text-primary font-semibold dark:text-accent'>
                                         {formatDate(item.slotDate)} | {item.slotTime}
                                     </span>
                                 </p>
                                 <p className='text-xs mt-1'>
-                                    <span className='text-sm text-text-dark font-semibold'>Fee: </span>
-                                    <span className='text-text-medium'>{currencySymbol}{item.amount}</span>
+                                    <span className='text-sm text-text-dark font-semibold dark:text-night-text'>Fee: </span>
+                                    <span className='text-text-medium dark:text-night-text-muted'>{currencySymbol}{item.amount}</span>
                                 </p>
 
                                 {/* Status badge */}
                                 {item.cancelled && (
-                                    <span className='inline-block mt-2 text-xs bg-red-100 text-red-600 px-3 py-1 rounded-full font-semibold'>
+                                    <span className='inline-block mt-2 text-xs bg-red-100 text-red-600 px-3 py-1 rounded-full font-semibold dark:bg-red-900/20 dark:text-red-400'>
                                         Cancelled
                                     </span>
                                 )}
                                 {!item.cancelled && item.payment && (
-                                    <span className='inline-block mt-2 text-xs bg-green-100 text-green-600 px-3 py-1 rounded-full font-semibold'>
+                                    <span className='inline-block mt-2 text-xs bg-green-100 text-green-600 px-3 py-1 rounded-full font-semibold dark:bg-green-900/20 dark:text-green-400'>
                                         Paid
                                     </span>
                                 )}
@@ -197,7 +197,7 @@ const MyAppointments = () => {
                                 {!item.cancelled && !item.payment && (
                                     <button
                                         onClick={() => payWithRazorpay(item._id)}
-                                        className='text-sm text-white bg-primary text-center sm:min-w-48 py-3 rounded-full hover:bg-primary-dark transition-all duration-300 font-semibold shadow-md hover:shadow-lg'
+                                        className='text-sm text-white bg-primary text-center sm:min-w-48 py-3 rounded-full hover:bg-primary-dark transition-all duration-300 font-semibold shadow-md hover:shadow-lg dark:hover:bg-primary'
                                     >
                                         Pay Online
                                     </button>
@@ -207,14 +207,14 @@ const MyAppointments = () => {
                                     <button
                                         onClick={() => cancelAppointment(item._id)}
                                         disabled={cancellingId === item._id}
-                                        className='glass-panel text-sm text-red-500 text-center sm:min-w-48 py-3 border border-red-200 rounded-full hover:bg-red-500 hover:text-white transition-all duration-300 font-semibold disabled:opacity-50 disabled:cursor-not-allowed'
+                                        className='glass-panel text-sm text-red-500 text-center sm:min-w-48 py-3 border border-red-200 rounded-full hover:bg-red-500 hover:text-white transition-all duration-300 font-semibold disabled:opacity-50 disabled:cursor-not-allowed dark:border-night-border dark:hover:bg-red-900/40'
                                     >
                                         {cancellingId === item._id ? 'Cancelling...' : 'Cancel appointment'}
                                     </button>
                                 )}
 
                                 {item.cancelled && (
-                                    <p className='text-sm text-red-400 text-center sm:min-w-48 py-3 border border-red-100 rounded-full glass-panel'>
+                                    <p className='text-sm text-red-400 text-center sm:min-w-48 py-3 border border-red-100 rounded-full glass-panel dark:bg-red-900/10 dark:border-red-900/20'>
                                         Appointment Cancelled
                                     </p>
                                 )}

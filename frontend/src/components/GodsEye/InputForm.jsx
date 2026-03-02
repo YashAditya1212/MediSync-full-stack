@@ -39,9 +39,9 @@ const InputForm = () => {
   useEffect(() => {}, [video]);
 
   return (
-    <main className="max-w-[900px] min-h-[400px] mx-auto">
+    <main className="max-w-[900px] min-h-[400px] mx-auto dark:text-night-text">
       {video ? (
-        <div className="w-full min-h-[200px] md:min-h-[400px] border-4 rounded-md border-dashed p-1 border-primary/30">
+        <div className="w-full min-h-[200px] md:min-h-[400px] border-4 rounded-md border-dashed p-1 border-primary/30 dark:border-accent/30">
           <video
             src={video}
             controls
@@ -53,7 +53,7 @@ const InputForm = () => {
           <div>
             <label
               htmlFor="image"
-              className="uppercase min-h-[200px] md:min-h-[400px] py-10 border-4 rounded-lg border-dashed bg-white/50 border-primary/30 flex items-center justify-center cursor-pointer hover:bg-white/80 transition-colors"
+              className="uppercase min-h-[200px] md:min-h-[400px] py-10 border-4 rounded-lg border-dashed bg-white/50 border-primary/30 flex items-center justify-center cursor-pointer hover:bg-white/80 transition-colors dark:bg-night-surface dark:border-accent/30 dark:hover:bg-night-surface/80"
             >
               {video ? "Uploaded Successfully" : "Click to upload video"}
             </label>
@@ -67,7 +67,7 @@ const InputForm = () => {
           </div>
           <button
             type="submit"
-            className="mt-4 font-bold py-4 px-8 bg-primary hover:bg-primary-dark rounded-md text-white w-full transition-colors shadow-lg shadow-primary/30"
+            className="mt-4 font-bold py-4 px-8 bg-primary hover:bg-primary-dark rounded-md text-white w-full transition-colors shadow-lg shadow-primary/30 dark:bg-accent dark:text-night-bg dark:hover:bg-primary dark:hover:text-white"
           >
             Submit this Video
           </button>

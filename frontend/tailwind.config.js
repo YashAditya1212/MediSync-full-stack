@@ -4,6 +4,7 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
@@ -18,8 +19,14 @@ export default {
         'accent': '#6ee7b7', // Emerald-300
         'background': '#f0fdfa', // Teal-50
         'surface': '#ffffff',
-        'text-main': '#1e293b', // Slate-800
         'text-muted': '#64748b', // Slate-500
+        
+        // Night Mode Colors
+        'night-bg': '#0f172a', // Slate-900
+        'night-surface': '#1e293b', // Slate-800
+        'night-text': '#f1f5f9', // Slate-100
+        'night-text-muted': '#94a3b8', // Slate-400
+        'night-border': '#334155', // Slate-700
       },
       fontFamily: {
         'sans': ['Outfit', 'sans-serif'],

@@ -10,22 +10,25 @@
     scroll-behavior: smooth;
   }
 
+  * {
+  cursor: none !important;
+}
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Playfair Display', serif;
   }
 
   body {
-    @apply bg-background text-text-main antialiased selection:bg-primary selection:text-white;
+    @apply bg-background text-text-main antialiased selection:bg-primary selection:text-white dark:bg-night-bg dark:text-night-text;
   }
 }
 
 @layer components {
   .glass-panel {
-    @apply bg-white/70 backdrop-blur-lg border border-white/50 shadow-soft;
+    @apply bg-white/70 backdrop-blur-lg border border-white/50 shadow-soft dark:bg-night-surface/70 dark:border-night-border;
   }
 
   .glass-card {
-    @apply bg-white/60 backdrop-blur-md border border-white/40 shadow-soft transition-all duration-300 hover:bg-white/80 hover:scale-[1.02] hover:shadow-glow;
+    @apply bg-white/60 backdrop-blur-md border border-white/40 shadow-soft transition-all duration-300 hover:bg-white/80 hover:scale-[1.02] hover:shadow-glow dark:bg-night-surface/60 dark:border-night-border dark:hover:bg-night-surface/80;
   }
 
   .btn-primary {

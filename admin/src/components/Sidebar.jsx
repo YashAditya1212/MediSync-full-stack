@@ -1,51 +1,92 @@
 import React, { useContext } from 'react'
-import { assets } from '../assets/assets'
-import { NavLink } from 'react-router-dom'
-import { DoctorContext } from '../context/DoctorContext'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { AdminContext } from '../context/AdminContext'
+import { DoctorContext } from '../context/DoctorContext'
+import {
+  LayoutDashboard, CalendarDays, UserPlus, Users,
+  Stethoscope, LogOut, Activity
+} from 'lucide-react'
 
 const Sidebar = () => {
+  const { aToken, setAToken } = useContext(AdminContext)
+  const { dToken, setDToken } = useContext(DoctorContext)
+  const navigate = useNavigate()
 
-  const { dToken } = useContext(DoctorContext)
-  const { aToken } = useContext(AdminContext)
+  const logout = () => {
+    if (aToken) { setAToken(''); localStorage.removeItem('aToken') }
+    if (dToken) { setDToken(''); localStorage.removeItem('dToken') }
+    navigate('/login')
+  }
+
+  const adminLinks = [
+    { to: '/admin-dashboard', icon: LayoutDashboard, label: 'Dashboard' },
+    { to: '/all-appointments', icon: CalendarDays, label: 'Appointments' },
+    { to: '/add-doctor', icon: UserPlus, label: 'Add Doctor' },
+    { to: '/doctor-list', icon: Users, label: 'Doctors' },
+  ]
+
+  const doctorLinks = [
+    { to: '/doctor-dashboard', icon: LayoutDashboard, label: 'Dashboard' },
+    { to: '/doctor-appointments', icon: CalendarDays, label: 'Appointments' },
+    { to: '/doctor-profile', icon: Stethoscope, label: 'My Profile' },
+  ]
+
+  const links = aToken ? adminLinks : doctorLinks
 
   return (
-    <div className='min-h-screen bg-white border-r'>
-      {aToken && <ul className='text-[#515151] mt-5'>
+    <aside
+      className='w-56 shrink-0 flex flex-col border-r border-dark-border'
+      style={{ background: '#080d1a', minHeight: 'calc(100vh - 56px)' }}
+    >
+      {/* Role badge */}
+      <div className='px-4 py-4 border-b border-dark-border'>
+        <div className='flex items-center gap-2'>
+          <div className='w-2 h-2 rounded-full bg-primary animate-pulse' />
+          <span className='text-xs font-semibold text-ink-mid uppercase tracking-widest'>
+            {aToken ? 'Admin Panel' : 'Doctor Panel'}
+          </span>
+        </div>
+      </div>
 
-        <NavLink to={'/admin-dashboard'} className={({ isActive }) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-[#F2F3FF] border-r-4 border-primary' : ''}`}>
-          <img className='min-w-5' src={assets.home_icon} alt='' />
-          <p className='hidden md:block'>Dashboard</p>
-        </NavLink>
-        <NavLink to={'/all-appointments'} className={({ isActive }) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-[#F2F3FF] border-r-4 border-primary' : ''}`}>
-          <img className='min-w-5' src={assets.appointment_icon} alt='' />
-          <p className='hidden md:block'>Appointments</p>
-        </NavLink>
-        <NavLink to={'/add-doctor'} className={({ isActive }) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-[#F2F3FF] border-r-4 border-primary' : ''}`}>
-          <img className='min-w-5' src={assets.add_icon} alt='' />
-          <p className='hidden md:block'>Add New Doctor</p>
-        </NavLink>
-        <NavLink to={'/doctor-list'} className={({ isActive }) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-[#F2F3FF] border-r-4 border-primary' : ''}`}>
-          <img className='min-w-5' src={assets.people_icon} alt='' />
-          <p className='hidden md:block'>Doctors List</p>
-        </NavLink>
-      </ul>}
+      {/* Navigation */}
+      <nav className='flex-1 py-4 px-3 flex flex-col gap-1'>
+        {links.map(({ to, icon: Icon, label }) => (
+          <NavLink
+            key={to}
+            to={to}
+            className={({ isActive }) =>
+              `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150 group ${
+                isActive
+                  ? 'bg-primary-dim text-primary border border-primary-border'
+                  : 'text-ink-mid hover:text-ink-bright hover:bg-dark-elevated'
+              }`
+            }
+          >
+            {({ isActive }) => (
+              <>
+                <Icon size={16} className={isActive ? 'text-primary' : 'text-ink-dim group-hover:text-ink-mid'} />
+                {label}
+              </>
+            )}
+          </NavLink>
+        ))}
+      </nav>
 
-      {dToken && <ul className='text-[#515151] mt-5'>
-        <NavLink to={'/doctor-dashboard'} className={({ isActive }) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-[#F2F3FF] border-r-4 border-primary' : ''}`}>
-          <img className='min-w-5' src={assets.home_icon} alt='' />
-          <p className='hidden md:block'>Dashboard</p>
-        </NavLink>
-        <NavLink to={'/doctor-appointments'} className={({ isActive }) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-[#F2F3FF] border-r-4 border-primary' : ''}`}>
-          <img className='min-w-5' src={assets.appointment_icon} alt='' />
-          <p className='hidden md:block'>Appointments</p>
-        </NavLink>
-        <NavLink to={'/doctor-profile'} className={({ isActive }) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-[#F2F3FF] border-r-4 border-primary' : ''}`}>
-          <img className='min-w-5' src={assets.people_icon} alt='' />
-          <p className='hidden md:block'>Profile</p>
-        </NavLink>
-      </ul>}
-    </div>
+      {/* System status */}
+      <div className='px-4 py-3 border-t border-dark-border'>
+        <div className='flex items-center gap-2 mb-3'>
+          <Activity size={12} className='text-accent-green' />
+          <span className='text-xs text-ink-dim'>System Online</span>
+        </div>
+        <button
+          onClick={logout}
+          className='w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-ink-mid hover:text-accent-red hover:bg-dark-elevated transition-all'
+        >
+          <LogOut size={15} />
+          Sign Out
+        </button>
+      </div>
+    </aside>
   )
 }
 

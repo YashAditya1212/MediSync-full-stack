@@ -1,78 +1,100 @@
-import React from 'react'
-import { useContext } from 'react'
-import { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { DoctorContext } from '../../context/DoctorContext'
-import { assets } from '../../assets/assets'
 import { AppContext } from '../../context/AppContext'
+import { IndianRupee, CalendarDays, Users, X, CheckCheck, Clock } from 'lucide-react'
+
+const StatCard = ({ icon: Icon, label, value, color, bgColor }) => (
+  <div className='stat-card flex items-center gap-4'>
+    <div className='w-12 h-12 rounded-xl flex items-center justify-center shrink-0' style={{ background: bgColor }}>
+      <Icon size={22} style={{ color }} />
+    </div>
+    <div>
+      <p className='text-2xl font-bold text-ink-bright font-mono'>{value}</p>
+      <p className='text-xs text-ink-dim mt-0.5 uppercase tracking-wider'>{label}</p>
+    </div>
+  </div>
+)
 
 const DoctorDashboard = () => {
-
   const { dToken, dashData, getDashData, cancelAppointment, completeAppointment } = useContext(DoctorContext)
   const { slotDateFormat, currency } = useContext(AppContext)
 
-
   useEffect(() => {
-
-    if (dToken) {
-      getDashData()
-    }
-
+    if (dToken) getDashData()
   }, [dToken])
 
-  return dashData && (
-    <div className='m-5'>
+  if (!dashData) return (
+    <div className='flex items-center justify-center h-64'>
+      <div className='w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin' />
+    </div>
+  )
 
-      <div className='flex flex-wrap gap-3'>
-        <div className='flex items-center gap-2 bg-white p-4 min-w-52 rounded border-2 border-gray-100 cursor-pointer hover:scale-105 transition-all'>
-          <img className='w-14' src={assets.earning_icon} alt="" />
-          <div>
-            <p className='text-xl font-semibold text-gray-600'>{currency} {dashData.earnings}</p>
-            <p className='text-gray-400'>Earnings</p>
-          </div>
-        </div>
-        <div className='flex items-center gap-2 bg-white p-4 min-w-52 rounded border-2 border-gray-100 cursor-pointer hover:scale-105 transition-all'>
-          <img className='w-14' src={assets.appointments_icon} alt="" />
-          <div>
-            <p className='text-xl font-semibold text-gray-600'>{dashData.appointments}</p>
-            <p className='text-gray-400'>Appointments</p>
-          </div>
-        </div>
-        <div className='flex items-center gap-2 bg-white p-4 min-w-52 rounded border-2 border-gray-100 cursor-pointer hover:scale-105 transition-all'>
-          <img className='w-14' src={assets.patients_icon} alt="" />
-          <div>
-            <p className='text-xl font-semibold text-gray-600'>{dashData.patients}</p>
-            <p className='text-gray-400'>Patients</p></div>
-        </div>
+  return (
+    <div className='max-w-5xl'>
+      <div className='mb-6'>
+        <h1 className='text-xl font-bold text-ink-bright'>My Dashboard</h1>
+        <p className='text-sm text-ink-dim mt-1'>Your appointments and earnings at a glance</p>
       </div>
 
-      <div className='bg-white'>
-        <div className='flex items-center gap-2.5 px-4 py-4 mt-10 rounded-t border'>
-          <img src={assets.list_icon} alt="" />
-          <p className='font-semibold'>Latest Bookings</p>
+      {/* Stats */}
+      <div className='grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8'>
+        <StatCard icon={IndianRupee} label='Total Earnings' value={`${currency}${dashData.earnings}`} color='#00d4aa' bgColor='rgba(0,212,170,0.1)' />
+        <StatCard icon={CalendarDays} label='Appointments' value={dashData.appointments} color='#3b82f6' bgColor='rgba(59,130,246,0.1)' />
+        <StatCard icon={Users} label='Patients' value={dashData.patients} color='#8b5cf6' bgColor='rgba(139,92,246,0.1)' />
+      </div>
+
+      {/* Recent bookings */}
+      <div className='rounded-xl border border-dark-border overflow-hidden' style={{ background: '#0e1525' }}>
+        <div className='flex items-center gap-2 px-5 py-4 border-b border-dark-border'>
+          <Clock size={15} className='text-primary' />
+          <span className='font-semibold text-ink-bright text-sm'>Latest Appointments</span>
         </div>
 
-        <div className='pt-4 border border-t-0'>
-          {dashData.latestAppointments.slice(0, 5).map((item, index) => (
-            <div className='flex items-center px-6 py-3 gap-3 hover:bg-gray-100' key={index}>
-              <img className='rounded-full w-10' src={item.userData.image} alt="" />
-              <div className='flex-1 text-sm'>
-                <p className='text-gray-800 font-medium'>{item.userData.name}</p>
-                <p className='text-gray-600 '>Booking on {slotDateFormat(item.slotDate)}</p>
-              </div>
-              {item.cancelled
-                ? <p className='text-red-400 text-xs font-medium'>Cancelled</p>
-                : item.isCompleted
-                  ? <p className='text-green-500 text-xs font-medium'>Completed</p>
-                  : <div className='flex'>
-                    <img onClick={() => cancelAppointment(item._id)} className='w-10 cursor-pointer' src={assets.cancel_icon} alt="" />
-                    <img onClick={() => completeAppointment(item._id)} className='w-10 cursor-pointer' src={assets.tick_icon} alt="" />
-                  </div>
-              }
-            </div>
+        {/* Column headers */}
+        <div className='grid grid-cols-[2fr_2fr_1fr_100px] gap-4 px-5 py-2.5 border-b border-dark-border' style={{ background: 'rgba(255,255,255,0.02)' }}>
+          {['Patient', 'Date & Time', 'Status', 'Actions'].map(h => (
+            <p key={h} className='text-xs font-medium text-ink-dim uppercase tracking-wider'>{h}</p>
           ))}
         </div>
-      </div>
 
+        {dashData.latestAppointments.slice(0, 5).map((item, index) => (
+          <div key={index} className='grid grid-cols-[2fr_2fr_1fr_100px] gap-4 items-center px-5 py-3.5 border-b border-dark-border last:border-0 hover:bg-dark-hover transition-colors'>
+            {/* Patient */}
+            <div className='flex items-center gap-2.5'>
+              <img src={item.userData.image} className='w-7 h-7 rounded-full object-cover shrink-0' style={{ border: '1px solid rgba(255,255,255,0.1)' }} alt='' />
+              <span className='text-sm text-ink-bright truncate'>{item.userData.name}</span>
+            </div>
+
+            {/* Date */}
+            <div>
+              <p className='text-sm text-ink-mid'>{slotDateFormat(item.slotDate)}</p>
+              <p className='text-xs text-ink-dim'>{item.slotTime}</p>
+            </div>
+
+            {/* Status */}
+            {item.cancelled
+              ? <span className='badge' style={{ background: 'rgba(239,68,68,0.1)', color: '#ef4444' }}>Cancelled</span>
+              : item.isCompleted
+                ? <span className='badge' style={{ background: 'rgba(16,185,129,0.1)', color: '#10b981' }}>Completed</span>
+                : <span className='badge' style={{ background: 'rgba(245,158,11,0.1)', color: '#f59e0b' }}>Pending</span>
+            }
+
+            {/* Actions */}
+            <div className='flex items-center gap-1'>
+              {!item.cancelled && !item.isCompleted ? (
+                <>
+                  <button onClick={() => cancelAppointment(item._id)} className='p-1.5 rounded hover:bg-dark-elevated text-ink-dim hover:text-accent-red transition-colors' title='Cancel'>
+                    <X size={14} />
+                  </button>
+                  <button onClick={() => completeAppointment(item._id)} className='p-1.5 rounded hover:bg-dark-elevated text-ink-dim hover:text-accent-green transition-colors' title='Mark Complete'>
+                    <CheckCheck size={14} />
+                  </button>
+                </>
+              ) : <span className='text-xs text-ink-dim px-1'>—</span>}
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   )
 }
