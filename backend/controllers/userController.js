@@ -8,12 +8,12 @@ import { v2 as cloudinary } from 'cloudinary'
 import stripe from "stripe";
 import razorpay from 'razorpay';
 
-// Gateway Initialize
-const stripeInstance = new stripe(process.env.STRIPE_SECRET_KEY)
-const razorpayInstance = new razorpay({
+// Gateway Initialize (optional - only if credentials are provided)
+const stripeInstance = process.env.STRIPE_SECRET_KEY ? new stripe(process.env.STRIPE_SECRET_KEY) : null
+const razorpayInstance = (process.env.RAZORPAY_KEY_ID && process.env.RAZORPAY_KEY_SECRET) ? new razorpay({
     key_id: process.env.RAZORPAY_KEY_ID,
     key_secret: process.env.RAZORPAY_KEY_SECRET,
-})
+}) : null
 
 // API to register user
 const registerUser = async (req, res) => {
@@ -253,6 +253,11 @@ const paymentRazorpay = async (req, res) => {
             receipt: appointmentId,
         }
 
+        // Check if Razorpay is configured
+        if (!razorpayInstance) {
+            return res.json({ success: false, message: 'Razorpay is not configured. Please add RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET to .env file' })
+        }
+
         // creation of an order
         const order = await razorpayInstance.orders.create(options)
 
@@ -267,6 +272,10 @@ const paymentRazorpay = async (req, res) => {
 // API to verify payment of razorpay
 const verifyRazorpay = async (req, res) => {
     try {
+        if (!razorpayInstance) {
+            return res.json({ success: false, message: 'Razorpay is not configured' })
+        }
+
         const { razorpay_order_id } = req.body
         const orderInfo = await razorpayInstance.orders.fetch(razorpay_order_id)
 
@@ -296,7 +305,12 @@ const paymentStripe = async (req, res) => {
             return res.json({ success: false, message: 'Appointment Cancelled or not found' })
         }
 
-        const currency = process.env.CURRENCY.toLocaleLowerCase()
+        // Check if Stripe is configured
+        if (!stripeInstance) {
+            return res.json({ success: false, message: 'Stripe is not configured. Please add STRIPE_SECRET_KEY to .env file' })
+        }
+
+        const currency = process.env.CURRENCY ? process.env.CURRENCY.toLocaleLowerCase() : 'usd'
 
         const line_items = [{
             price_data: {

@@ -19,12 +19,12 @@ const MyProfile = () => {
     })
 
     return (
-        <div className='max-w-lg flex flex-col gap-4 text-sm'>
+        <div className='glass-card p-8 rounded-3xl max-w-lg flex flex-col gap-4 text-sm'>
             <img className='w-36 h-36 rounded-full object-cover border-4 border-primary shadow-card' src={userData.image} alt="" />
 
             {isEdit ? (
                 <input 
-                    className='bg-light-bg text-3xl font-bold max-w-60 mt-4 p-2 rounded-lg border-2 border-primary focus:outline-none' 
+                    className='glass-panel text-3xl font-bold max-w-60 mt-4 p-2 rounded-lg border border-primary/50 focus:outline-none focus:border-primary' 
                     type="text" 
                     onChange={(e) => setUserData(prev => ({ ...prev, name: e.target.value }))} 
                     value={userData.name} 
@@ -33,7 +33,7 @@ const MyProfile = () => {
                 <p className='font-bold text-3xl text-text-dark mt-4'>{userData.name}</p>
             )}
 
-            <hr className='bg-gray-300 h-[2px] border-none' />
+            <hr className='bg-white/40 h-[1px] border-none' />
             
             <div>
                 <p className='text-text-medium font-bold text-lg mt-3'>CONTACT INFORMATION</p>
@@ -44,7 +44,7 @@ const MyProfile = () => {
                     <p className='font-semibold text-text-dark'>Phone:</p>
                     {isEdit ? (
                         <input 
-                            className='bg-light-bg max-w-52 p-2 rounded-lg border-2 border-gray-300 focus:border-primary focus:outline-none' 
+                            className='glass-panel max-w-52 p-2 rounded-lg border border-white/40 focus:border-primary focus:outline-none' 
                             type="text" 
                             onChange={(e) => setUserData(prev => ({ ...prev, phone: e.target.value }))} 
                             value={userData.phone} 
@@ -57,13 +57,13 @@ const MyProfile = () => {
                     {isEdit ? (
                         <p>
                             <input 
-                                className='bg-light-bg p-2 rounded-lg border-2 border-gray-300 focus:border-primary focus:outline-none w-full mb-2' 
+                                className='glass-panel p-2 rounded-lg border border-white/40 focus:border-primary focus:outline-none w-full mb-2' 
                                 type="text" 
                                 onChange={(e) => setUserData(prev => ({ ...prev, address: { ...prev.address, line1: e.target.value } }))} 
                                 value={userData.address.line1} 
                             />
                             <input 
-                                className='bg-light-bg p-2 rounded-lg border-2 border-gray-300 focus:border-primary focus:outline-none w-full' 
+                                className='glass-panel p-2 rounded-lg border border-white/40 focus:border-primary focus:outline-none w-full' 
                                 type="text" 
                                 onChange={(e) => setUserData(prev => ({ ...prev, address: { ...prev.address, line2: e.target.value } }))} 
                                 value={userData.address.line2} 
@@ -81,7 +81,7 @@ const MyProfile = () => {
                     <p className='font-semibold text-text-dark'>Gender:</p>
                     {isEdit ? (
                         <select 
-                            className='max-w-28 bg-light-bg p-2 rounded-lg border-2 border-gray-300 focus:border-primary focus:outline-none' 
+                            className='max-w-28 glass-panel p-2 rounded-lg border border-white/40 focus:border-primary focus:outline-none' 
                             onChange={(e) => setUserData(prev => ({ ...prev, gender: e.target.value }))} 
                             value={userData.gender}
                         >
@@ -95,7 +95,7 @@ const MyProfile = () => {
                     <p className='font-semibold text-text-dark'>Birthday:</p>
                     {isEdit ? (
                         <input 
-                            className='max-w-36 bg-light-bg p-2 rounded-lg border-2 border-gray-300 focus:border-primary focus:outline-none' 
+                            className='max-w-36 glass-panel p-2 rounded-lg border border-white/40 focus:border-primary focus:outline-none' 
                             type='date' 
                             onChange={(e) => setUserData(prev => ({ ...prev, dob: e.target.value }))} 
                             value={userData.dob} 

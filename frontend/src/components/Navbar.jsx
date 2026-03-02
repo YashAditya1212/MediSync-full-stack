@@ -1,52 +1,61 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { assets } from '../assets/assets'
 import { NavLink, useNavigate } from 'react-router-dom'
+import { UserContext } from '../context/UserContext'
 
 const Navbar = () => {
 
   const navigate = useNavigate()
+  const { token, logout, userData } = useContext(UserContext)
 
   const [showMenu, setShowMenu] = useState(false)
-  const [token, setToken] = useState(true)
 
   return (
-    <div className='flex items-center justify-between text-sm py-4 mb-5 border-b border-gray-200 shadow-sm'>
+    <div className='fixed top-0 left-0 right-0 z-50 flex items-center justify-between text-sm py-4 px-6 md:px-12 backdrop-blur-md bg-white/70 border-b border-white/50 shadow-soft transition-all duration-300'>
       <img onClick={() => navigate('/')} className='w-44 cursor-pointer transition-transform hover:scale-105' src={assets.logo} alt="" />
-      <ul className='md:flex items-start gap-6 font-medium hidden'>
-        <NavLink to='/' >
-          <li className='py-1 text-text-medium hover:text-primary transition-colors'>HOME</li>
-          <hr className='border-none outline-none h-0.5 bg-primary w-3/5 m-auto hidden' />
+      <ul className='md:flex items-center gap-8 font-medium hidden'>
+        <NavLink to='/' className={({isActive}) => `relative group py-2 px-4 transition-all duration-300 ${isActive ? 'text-primary font-bold' : 'text-text-medium hover:text-primary'}`}>
+          <li>HOME</li>
+          <span className="absolute bottom-0 left-0 w-full h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
         </NavLink>
-        <NavLink to='/doctors' >
-          <li className='py-1 text-text-medium hover:text-primary transition-colors'>ALL DOCTORS</li>
-          <hr className='border-none outline-none h-0.5 bg-primary w-3/5 m-auto hidden' />
+        <NavLink to='/doctors' className={({isActive}) => `relative group py-2 px-4 transition-all duration-300 ${isActive ? 'text-primary font-bold' : 'text-text-medium hover:text-primary'}`}>
+          <li>ALL DOCTORS</li>
+          <span className="absolute bottom-0 left-0 w-full h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
         </NavLink>
-        <NavLink to='/about' >
-          <li className='py-1 text-text-medium hover:text-primary transition-colors'>ABOUT</li>
-          <hr className='border-none outline-none h-0.5 bg-primary w-3/5 m-auto hidden' />
+        <NavLink to='/about' className={({isActive}) => `relative group py-2 px-4 transition-all duration-300 ${isActive ? 'text-primary font-bold' : 'text-text-medium hover:text-primary'}`}>
+          <li>ABOUT</li>
+          <span className="absolute bottom-0 left-0 w-full h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
         </NavLink>
-        <NavLink to='/contact' >
-          <li className='py-1 text-text-medium hover:text-primary transition-colors'>CONTACT</li>
-          <hr className='border-none outline-none h-0.5 bg-primary w-3/5 m-auto hidden' />
+        <NavLink to='/contact' className={({isActive}) => `relative group py-2 px-4 transition-all duration-300 ${isActive ? 'text-primary font-bold' : 'text-text-medium hover:text-primary'}`}>
+          <li>CONTACT</li>
+          <span className="absolute bottom-0 left-0 w-full h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
         </NavLink>
       </ul>
 
-      <div className='flex items-center gap-4 '>
+      <div className='flex items-center gap-6'>
+        <NavLink to='/gods-eye' className={({isActive}) => `hidden md:flex items-center gap-2 px-6 py-2.5 rounded-full font-bold tracking-wide transition-all duration-300 ${isActive ? 'bg-primary text-white shadow-glow' : 'bg-mint-light text-primary border border-primary/20 hover:bg-primary hover:text-white hover:shadow-glow'}`}>
+          <span className="relative flex h-3 w-3">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-3 w-3 bg-primary-dark"></span>
+          </span>
+          GOD'S EYE
+        </NavLink>
+
         {
           token
             ? <div className='flex items-center gap-2 cursor-pointer group relative'>
-              <img className='w-9 h-9 rounded-full border-2 border-primary object-cover' src={assets.profile_pic} alt="" />
+              <img className='w-10 h-10 rounded-full border-2 border-primary object-cover shadow-sm' src={userData?.image || assets.profile_pic} alt="" />
               <img className='w-2.5 transition-transform group-hover:rotate-180' src={assets.dropdown_icon} alt="" />
               <div className='absolute top-0 right-0 pt-14 text-base font-medium text-text-medium z-20 hidden group-hover:block'>
-                <div className='min-w-48 bg-white rounded-lg shadow-card flex flex-col gap-2 p-4 border border-gray-100'>
-                  <p onClick={() => navigate('/my-profile')} className='hover:text-primary cursor-pointer py-2 px-3 rounded-md hover:bg-light-bg transition-all'>My Profile</p>
-                  <p onClick={() => navigate('/my-appointments')} className='hover:text-primary cursor-pointer py-2 px-3 rounded-md hover:bg-light-bg transition-all'>My Appointments</p>
-                  <hr className='border-gray-200' />
-                  <p onClick={() => { setToken(false); navigate('/') }} className='hover:text-danger cursor-pointer py-2 px-3 rounded-md hover:bg-red-50 transition-all'>Logout</p>
+                <div className='min-w-48 bg-white/90 backdrop-blur-xl rounded-xl shadow-lg flex flex-col gap-2 p-4 border border-white/50'>
+                  <p onClick={() => navigate('/my-profile')} className='hover:text-primary cursor-pointer py-2 px-3 rounded-md hover:bg-mint-light transition-all'>My Profile</p>
+                  <p onClick={() => navigate('/my-appointments')} className='hover:text-primary cursor-pointer py-2 px-3 rounded-md hover:bg-mint-light transition-all'>My Appointments</p>
+                  <hr className='border-gray-100' />
+                  <p onClick={() => { logout(); navigate('/') }} className='hover:text-red-500 cursor-pointer py-2 px-3 rounded-md hover:bg-red-50 transition-all'>Logout</p>
                 </div>
               </div>
             </div>
-            : <button onClick={() => navigate('/login')} className='bg-primary text-white px-8 py-3 rounded-full font-medium hidden md:block hover:bg-primary-dark transition-all shadow-md hover:shadow-lg'>Create account</button>
+            : <button onClick={() => navigate('/login')} className='bg-primary text-white px-8 py-3 rounded-full font-medium hidden md:block hover:bg-primary-dark transition-all shadow-md hover:shadow-glow hover:-translate-y-0.5'>Create account</button>
         }
         <img onClick={() => setShowMenu(true)} className='w-6 md:hidden cursor-pointer' src={assets.menu_icon} alt="" />
 

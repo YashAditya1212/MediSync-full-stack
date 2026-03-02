@@ -1,110 +1,53 @@
-
-
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Libre+Baskerville:ital,wght@0,400..700;1,400..700&display=swap');
-
-
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-* {
-    font-family: 'Outfit', Libre Baskerville;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html {
+@layer base {
+  html {
+    font-family: 'Outfit', sans-serif;
     scroll-behavior: smooth;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+  }
+
+  body {
+    @apply bg-background text-text-main antialiased selection:bg-primary selection:text-white;
+  }
 }
 
-body {
-    @apply bg-gray-50;
+@layer components {
+  .glass-panel {
+    @apply bg-white/70 backdrop-blur-lg border border-white/50 shadow-soft;
+  }
+
+  .glass-card {
+    @apply bg-white/60 backdrop-blur-md border border-white/40 shadow-soft transition-all duration-300 hover:bg-white/80 hover:scale-[1.02] hover:shadow-glow;
+  }
+
+  .btn-primary {
+    @apply px-8 py-3 bg-gradient-to-r from-primary to-primary-dark text-white rounded-full font-bold tracking-wide transition-all duration-300 hover:shadow-glow hover:-translate-y-0.5 active:scale-95 active:shadow-none;
+  }
+
+  .btn-outline {
+    @apply px-8 py-3 border-2 border-primary text-primary rounded-full font-bold tracking-wide transition-all duration-300 hover:bg-primary hover:text-white active:scale-95;
+  }
 }
 
-/* Active Navigation Link Styles */
-.active hr {
-    @apply block;
-}
-
-@media (max-width: 740px) {
-    .active p {
-        @apply text-white bg-primary;
-    }
-}
-
-/* Hide Scrollbar */
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
-    @apply hidden;
+  width: 8px;
 }
-
-/* Custom Animations */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+::-webkit-scrollbar-track {
+  background: transparent;
 }
-
-@keyframes slideUp {
-    from {
-        transform: translateY(20px);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
 }
-
-@keyframes pulse {
-    0%, 100% {
-        opacity: 1;
-    }
-    50% {
-        opacity: 0.5;
-    }
-}
-
-.animate-fade-in {
-    animation: fadeIn 0.6s ease-in-out;
-}
-
-.animate-slide-up {
-    animation: slideUp 0.6s ease-out;
-}
-
-/* Custom Utilities */
-.text-gradient {
-    @apply bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent;
-}
-
-/* Focus States */
-input:focus,
-textarea:focus,
-select:focus {
-    @apply outline-none ring-2 ring-primary ring-opacity-50;
-}
-
-/* Button Hover Effects */
-button {
-    @apply transition-all duration-300;
-}
-
-/* Card Hover Effect */
-.card-hover {
-    @apply transition-all duration-300 hover:shadow-card-hover hover:scale-105;
-}
-
-/* Smooth Transitions */
-.smooth-transition {
-    @apply transition-all duration-300 ease-in-out;
-}
-
-/* Custom Grid for Doctor Cards */
-.grid-cols-auto {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
 }

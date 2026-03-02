@@ -15,8 +15,8 @@ const SpecialityMenu = () => {
                         className='flex flex-col items-center text-xs cursor-pointer flex-shrink-0 hover:translate-y-[-10px] transition-all duration-500 group' 
                         key={index}
                     >
-                        <div className='w-16 sm:w-24 h-16 sm:h-24 bg-light-bg rounded-full flex items-center justify-center mb-2 group-hover:bg-primary group-hover:shadow-lg transition-all'>
-                            <img className='w-12 sm:w-16' src={item.image} alt="" />
+                        <div className='w-16 sm:w-24 h-16 sm:h-24 glass-panel rounded-full flex items-center justify-center mb-2 group-hover:bg-primary group-hover:text-white transition-all shadow-sm group-hover:shadow-lg'>
+                            <img className='w-12 sm:w-16 group-hover:brightness-0 group-hover:invert transition-all' src={item.image} alt="" />
                         </div>
                         <p className='text-text-medium group-hover:text-primary font-medium transition-colors'>{item.speciality}</p>
                     </Link>
