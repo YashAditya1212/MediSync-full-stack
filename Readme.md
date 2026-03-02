@@ -357,7 +357,7 @@ The apps will be running at:
 ## Author
 
 **Yash Aditya Mishra**  
-B.Tech Student | Backend & Cloud Developer  
+B.Tech Student | DevOps & Cloud Developer  
 [GitHub](https://github.com/YashAditya1212)
 
 ---
