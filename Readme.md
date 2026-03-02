@@ -4,7 +4,7 @@
 
 <h1 align="center">MediSync</h1>
 <p align="center">
-  <strong>A full-stack medical appointment platform with integrated AI accident detection</strong>
+  <strong>A full-stack medical appointment platform with CNN based Emergency Response System </strong>
 </p>
 
 <p align="center">
@@ -22,9 +22,9 @@
 
 MediSync is a full-stack healthcare platform built to streamline the entire OPD (Outpatient Department) experience. Patients can browse doctors by speciality, book time slots, manage their appointments, and pay online — all from a single interface. Doctors get their own dashboard to manage schedules and mark appointments complete. Admins have full control over the platform through a dedicated admin panel.
 
-The project also includes **God's Eye**, an integrated AI-powered accident detection module using YOLOv8 that can analyse CCTV or uploaded footage and trigger emergency response alerts in real time.
+The heart of the project is **God's Eye**, an integrated AI-powered accident detection module using YOLOv8 that can analyse CCTV or uploaded footage and trigger emergency response alerts in real time.
 
-The UI is built with an Awwwards-inspired design philosophy — mint green & white palette, glassmorphism cards, smooth animations, a custom cursor, and a starry background system.
+The UI is built with an Awards-inspired design philosophy — mint green & white palette, glassmorphism cards, smooth animations, a custom cursor, and a starry background system.
 
 ---
 
