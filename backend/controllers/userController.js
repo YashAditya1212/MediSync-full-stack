@@ -8,12 +8,12 @@ import { v2 as cloudinary } from 'cloudinary'
 import stripe from "stripe";
 import razorpay from 'razorpay';
 
-// Gateway Initialize
-const stripeInstance = new stripe(process.env.STRIPE_SECRET_KEY)
-const razorpayInstance = new razorpay({
+// Gateway Initialize (optional - only if credentials are provided)
+const stripeInstance = process.env.STRIPE_SECRET_KEY ? new stripe(process.env.STRIPE_SECRET_KEY) : null
+const razorpayInstance = (process.env.RAZORPAY_KEY_ID && process.env.RAZORPAY_KEY_SECRET) ? new razorpay({
     key_id: process.env.RAZORPAY_KEY_ID,
     key_secret: process.env.RAZORPAY_KEY_SECRET,
-})
+}) : null
 
 // API to register user
 const registerUser = async (req, res) => {
@@ -29,6 +29,12 @@ const registerUser = async (req, res) => {
         // validating email format
         if (!validator.isEmail(email)) {
             return res.json({ success: false, message: "Please enter a valid email" })
+        }
+
+        // check if user already exists
+        const existingUser = await userModel.findOne({ email })
+        if (existingUser) {
+            return res.json({ success: false, message: "User already exists with this email" })
         }
 
         // validating strong password
@@ -48,13 +54,35 @@ const registerUser = async (req, res) => {
 
         const newUser = new userModel(userData)
         const user = await newUser.save()
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET)
+        
+        console.log(`✅ User registered successfully: ${user.email} (ID: ${user._id})`)
 
-        res.json({ success: true, token })
+        const token = jwt.sign(
+            { id: user._id },
+            process.env.JWT_SECRET,
+            { expiresIn: '7d' }
+        )
+
+        // Set cookie too (supports your cookie-based auth style)
+        res.cookie('token', token, {
+            httpOnly: true,
+            sameSite: 'lax',
+            secure: false,
+            maxAge: 7 * 24 * 60 * 60 * 1000,
+        })
+
+        res.json({
+            success: true,
+            token,
+            message: "Account created successfully"
+        })
 
     } catch (error) {
         console.log(error)
-        res.json({ success: false, message: error.message })
+        if (error?.code === 11000) {
+            return res.status(409).json({ success: false, message: "Email already exists. Use a different email." })
+        }
+        res.status(500).json({ success: false, message: error.message })
     }
 }
 
@@ -72,8 +100,19 @@ const loginUser = async (req, res) => {
         const isMatch = await bcrypt.compare(password, user.password)
 
         if (isMatch) {
-            const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET)
-            res.json({ success: true, token })
+            const token = jwt.sign(
+                { id: user._id },
+                process.env.JWT_SECRET,
+                { expiresIn: '7d' }
+            )
+            console.log(`✅ User logged in successfully: ${user.email} (ID: ${user._id})`)
+            res.cookie('token', token, {
+                httpOnly: true,
+                sameSite: 'lax',
+                secure: false,
+                maxAge: 7 * 24 * 60 * 60 * 1000,
+            })
+            res.json({ success: true, token, message: "Login successful" })
         }
         else {
             res.json({ success: false, message: "Invalid credentials" })
@@ -173,12 +212,14 @@ const bookAppointment = async (req, res) => {
         }
 
         const newAppointment = new appointmentModel(appointmentData)
-        await newAppointment.save()
+        const savedAppointment = await newAppointment.save()
+        
+        console.log(`✅ Appointment booked successfully: User ${userId} -> Doctor ${docId} (Appointment ID: ${savedAppointment._id})`)
 
         // save new slots data in docData
         await doctorModel.findByIdAndUpdate(docId, { slots_booked })
 
-        res.json({ success: true, message: 'Appointment Booked' })
+        res.json({ success: true, message: 'Appointment Booked', appointmentId: savedAppointment._id })
 
     } catch (error) {
         console.log(error)
@@ -253,6 +294,11 @@ const paymentRazorpay = async (req, res) => {
             receipt: appointmentId,
         }
 
+        // Check if Razorpay is configured
+        if (!razorpayInstance) {
+            return res.json({ success: false, message: 'Razorpay is not configured. Please add RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET to .env file' })
+        }
+
         // creation of an order
         const order = await razorpayInstance.orders.create(options)
 
@@ -267,6 +313,10 @@ const paymentRazorpay = async (req, res) => {
 // API to verify payment of razorpay
 const verifyRazorpay = async (req, res) => {
     try {
+        if (!razorpayInstance) {
+            return res.json({ success: false, message: 'Razorpay is not configured' })
+        }
+
         const { razorpay_order_id } = req.body
         const orderInfo = await razorpayInstance.orders.fetch(razorpay_order_id)
 
@@ -296,7 +346,12 @@ const paymentStripe = async (req, res) => {
             return res.json({ success: false, message: 'Appointment Cancelled or not found' })
         }
 
-        const currency = process.env.CURRENCY.toLocaleLowerCase()
+        // Check if Stripe is configured
+        if (!stripeInstance) {
+            return res.json({ success: false, message: 'Stripe is not configured. Please add STRIPE_SECRET_KEY to .env file' })
+        }
+
+        const currency = process.env.CURRENCY ? process.env.CURRENCY.toLocaleLowerCase() : 'usd'
 
         const line_items = [{
             price_data: {

@@ -1,16 +1,27 @@
 import React from 'react'
 import Header from '../components/Header'
-import TopDoctors from '../components/TopDoctors'
-import Banner from '../components/Banner'
-import SpecialityMenu from '../components/SpecialityMenu'
+import StatsBar from '../components/StatsBar'
+import About from '../components/About'
+import Services from '../components/Services'
+import WhyChooseUs from '../components/WhyChooseUs'
+import DoctorsSection from '../components/DoctorsSection'
+import GallerySection from '../components/GallerySection'
+import GodsEyeShowcase from '../components/GodsEyeShowcase'
+import ContactSection from '../components/ContactSection'
 
 const Home = () => {
   return (
-    <div>
+    <div className="w-full">
       <Header />
-      <SpecialityMenu />
-      <TopDoctors />
-      <Banner />
+      <StatsBar />
+      <About />
+      <Services />
+      <WhyChooseUs />
+      <DoctorsSection />
+      <GallerySection />
+      {/* GodsEyeSection is replaced by GodsEyeShowcase */}
+      <GodsEyeShowcase />
+      <ContactSection />
     </div>
   )
 }

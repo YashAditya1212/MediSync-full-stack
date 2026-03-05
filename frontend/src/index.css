@@ -1,110 +1,133 @@
-
-
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Libre+Baskerville:ital,wght@0,400..700;1,400..700&display=swap');
-
-
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-* {
-    font-family: 'Outfit', Libre Baskerville;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+:root {
+  --mint: #ADEBB3;          /* fresh, lively green */
+  --mint-dark: #6DBF7A;     /* deeper for text/accents */
+  --mint-bg: #E8F8EA;       /* soft mint tint for sections */
+  --deep-dark: #0F1C14;     /* rich dark green-black */
+  --white: #FFFFFF;
+  --cream: #F4FBF5;         /* updated to match section-bg */
+  --gold: #C9A84C;
+  --gold-light: #E8D5A3;
+  --text-dark: #1A2E20;     /* text-primary */
+  --text-muted: #5A7A62;
+  --card-bg: #FFFFFF;
+  --section-bg: #F4FBF5;
+  
+  /* Legacy mapping for compatibility */
+  --mint-light: var(--mint-bg);
+  --dark-green: var(--deep-dark);
+}
+
+.dark {
+  --mint: #ADEBB3;
+  --mint-dark: #7ED98A;
+  --mint-bg: #0E2016;
+  --deep-dark: #E8F8EA;
+  --white: #0A160D;         /* section-bg */
+  --cream: #0F1C14;         /* card-bg */
+  --text-dark: #D8F0DC;     /* text-primary */
+  --text-muted: #7AAB82;
+  --card-bg: #0F1C14;
+  --section-bg: #0A160D;
 }
 
 html {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 body {
-    @apply bg-gray-50;
+  font-family: 'DM Sans', sans-serif;
+  background-color: var(--white);
+  color: var(--text-dark);
+  overflow-x: hidden;
+  width: 100%;
+  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
-/* Active Navigation Link Styles */
-.active hr {
-    @apply block;
+h1,
+h2,
+h3,
+h4 {
+  font-family: 'Playfair Display', serif;
 }
 
-@media (max-width: 740px) {
-    .active p {
-        @apply text-white bg-primary;
-    }
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
-/* Hide Scrollbar */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes slowZoom {
+  0% {
+    transform: scale(1.0);
+  }
+  100% {
+    transform: scale(1.08);
+  }
+}
+
+@keyframes wave {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@layer base {
+  body {
+    @apply antialiased selection:bg-[var(--mint)] selection:text-white transition-colors duration-300;
+  }
+}
+
+@layer components {
+  .btn-animated {
+    background: linear-gradient(135deg, #A8D5BA, #C9A84C, #A8D5BA);
+    background-size: 200% 200%;
+    animation: gradientShift 3s ease infinite;
+    color: white;
+    border-radius: 9999px;
+    padding: 8px 24px;
+    @apply inline-flex items-center justify-center font-semibold shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5;
+  }
+}
+
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
-    @apply hidden;
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--mint);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--mint-dark);
 }
 
-/* Custom Animations */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes slideUp {
-    from {
-        transform: translateY(20px);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
-@keyframes pulse {
-    0%, 100% {
-        opacity: 1;
-    }
-    50% {
-        opacity: 0.5;
-    }
-}
-
-.animate-fade-in {
-    animation: fadeIn 0.6s ease-in-out;
-}
-
-.animate-slide-up {
-    animation: slideUp 0.6s ease-out;
-}
-
-/* Custom Utilities */
-.text-gradient {
-    @apply bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent;
-}
-
-/* Focus States */
-input:focus,
-textarea:focus,
-select:focus {
-    @apply outline-none ring-2 ring-primary ring-opacity-50;
-}
-
-/* Button Hover Effects */
-button {
-    @apply transition-all duration-300;
-}
-
-/* Card Hover Effect */
-.card-hover {
-    @apply transition-all duration-300 hover:shadow-card-hover hover:scale-105;
-}
-
-/* Smooth Transitions */
-.smooth-transition {
-    @apply transition-all duration-300 ease-in-out;
-}
-
-/* Custom Grid for Doctor Cards */
-.grid-cols-auto {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-}

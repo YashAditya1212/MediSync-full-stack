@@ -5,8 +5,14 @@ export const AppContext = createContext()
 
 const AppContextProvider = (props) => {
 
-    const currency = import.meta.env.VITE_CURRENCY
-    const backendUrl = import.meta.env.VITE_BACKEND_URL
+    const currency = import.meta.env.VITE_CURRENCY || 'USD'
+    const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:4000'
+    
+    // Warn if backendUrl is not set
+    if (!import.meta.env.VITE_BACKEND_URL) {
+        console.warn('⚠️ VITE_BACKEND_URL not found in .env file. Using default: http://localhost:4000')
+        console.warn('📝 Please create a .env file in the admin folder with: VITE_BACKEND_URL=http://localhost:4000')
+    }
 
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 

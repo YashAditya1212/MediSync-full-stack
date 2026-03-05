@@ -4,7 +4,7 @@ import group_profiles from './group_profiles.png'
 import profile_pic from './profile_pic.png'
 import contact_image from './contact_image.png'
 import about_image from './about_image.png'
-import logo from './logo.svg'
+import logo from './logo.png'
 import dropdown_icon from './dropdown_icon.svg'
 import menu_icon from './menu_icon.svg'
 import cross_icon from './cross_icon.png'
@@ -36,7 +36,32 @@ import General_physician from './General_physician.svg'
 import Gynecologist from './Gynecologist.svg'
 import Neurologist from './Neurologist.svg'
 import Pediatricians from './Pediatricians.svg'
-
+import doc_in_laptop from './doc_in_laptop.png'
+import map_image from './map.jpg'
+import about_hospital from './about_hospital.jpg'
+import aerial_hospital from './aerial_hospital.jpg'
+import doctors_team from './doctors_team.jpg'
+import gallery_1 from './gallery_1.jpg'
+import gallery_2 from './gallery_2.jpg'
+import gallery_3 from './gallery_3.jpg'
+import gallery_4 from './gallery_4.jpg'
+import gallery_5 from './gallery_5.jpg'
+import login_background from './login_background.png'
+import nav_eye from './nav_eye.png'
+import add_icon from './add_icon.svg'
+import admin_logo from './logo.png'
+import appointment_icon from './appointment_icon.svg'
+import appointments_icon from './appointments_icon.svg'
+import cancel_icon from './cancel_icon.svg'
+import doctor_icon from './doctor_icon.svg'
+import earning_icon from './earning_icon.svg'
+import home_icon from './home_icon.svg'
+import list_icon from './list_icon.svg'
+import patient_icon from './patient_icon.svg'
+import patients_icon from './patients_icon.svg'
+import people_icon from './people_icon.svg'
+import tick_icon from './tick_icon.svg'
+import upload_area_svg from './upload_area.svg'
 
 export const assets = {
     appointment_img,
@@ -55,7 +80,38 @@ export const assets = {
     dropdown_icon,
     upload_icon,
     stripe_logo,
-    razorpay_logo
+    razorpay_logo,
+    doc_in_laptop,
+    about_hospital,
+    aerial_hospital,
+    doctors_team,
+    gallery_1,
+    gallery_2,
+    gallery_3,
+    gallery_4,
+    gallery_5,
+    login_background,
+    nav_eye,
+    add_icon,
+    admin_logo,
+    appointment_icon,
+    appointments_icon,
+    cancel_icon,
+    doctor_icon,
+    earning_icon,
+    home_icon,
+    list_icon,
+    map_image,
+    patient_icon,
+    patients_icon,
+    people_icon,
+    tick_icon,
+    upload_area: upload_area_svg,
+    doctor_1: doc1,
+    doctor_2: doc2,
+    doctor_3: doc3,
+    doctor_4: doc4,
+    map_placeholder: about_hospital // Using about_hospital as placeholder if map is missing
 }
 
 export const specialityData = [
