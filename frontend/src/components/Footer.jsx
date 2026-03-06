@@ -129,8 +129,13 @@ const Footer = () => {
         </div>
 
         {/* BOTTOM BAR */}
-        <div className="mt-20 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-[11px] font-bold tracking-widest uppercase text-white/40">
-          <p>© 2025 MEDISYNC HOSPITAL. ALL RIGHTS RESERVED.</p>
+        <div className="mt-20 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6 text-[11px] font-bold tracking-widest uppercase text-white/40">
+          <div className="flex flex-col items-center md:items-start gap-2">
+            <p>© 2025 MEDISYNC HOSPITAL. ALL RIGHTS RESERVED.</p>
+            <p className="text-[14px] text-white normal-case tracking-normal font-sans">
+              Creator of MediSync: <span className="font-bold">Yash Aditya Mishra</span>
+            </p>
+          </div>
           <div className="flex gap-8">
             <Link to='/privacy-policy' className="hover:text-white transition-colors">Privacy Policy</Link>
             <Link to='/terms-of-service' className="hover:text-white transition-colors">Terms of Service</Link>

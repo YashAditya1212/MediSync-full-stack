@@ -11,6 +11,12 @@ const Sidebar = () => {
 
   return (
     <div className='min-h-screen bg-[var(--deep-dark)] border-r border-white/5 pt-5'>
+      <ul className='mt-2 mb-4 border-b border-white/5 pb-4'>
+        <NavLink to={'/'} className={({ isActive }) => `flex items-center gap-3 py-4 px-3 md:px-9 md:min-w-72 cursor-pointer transition-all ${isActive ? 'bg-[var(--mint)]/10 text-[var(--mint)] border-r-4 border-[var(--mint)]' : 'text-white/60 hover:bg-white/5 hover:text-white'}`}>
+          <img className='min-w-5 brightness-0 invert opacity-70' src={assets.home_icon} alt='' />
+          <p className='hidden md:block text-[13px] font-bold uppercase tracking-widest'>Home</p>
+        </NavLink>
+      </ul>
       {aToken && <ul className='mt-5'>
 
         <NavLink to={'/admin/dashboard'} className={({ isActive }) => `flex items-center gap-3 py-4 px-3 md:px-9 md:min-w-72 cursor-pointer transition-all ${isActive ? 'bg-[var(--mint)]/10 text-[var(--mint)] border-r-4 border-[var(--mint)]' : 'text-white/60 hover:bg-white/5 hover:text-white'}`}>

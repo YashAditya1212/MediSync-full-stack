@@ -23,7 +23,7 @@ const content = [
 const GodsEyeSection = () => {
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [scrollSpeed, setScrollSpeed] = useState(500); // Default speed
+  const [scrollSpeed, setScrollSpeed] = useState(200); // Even faster default speed
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -33,8 +33,8 @@ const GodsEyeSection = () => {
     return () => clearInterval(interval);
   }, [scrollSpeed]);
 
-  const handleMouseEnter = () => setScrollSpeed(700); // Slower speed on hover
-  const handleMouseLeave = () => setScrollSpeed(500); // Reset to default speed
+  const handleMouseEnter = () => setScrollSpeed(1000); // Slower speed on hover
+  const handleMouseLeave = () => setScrollSpeed(200); // Reset to fast speed
 
   return (
     <section 
@@ -58,7 +58,7 @@ const GodsEyeSection = () => {
       {/* CONTENT */}
       <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6">
         <div 
-          className="max-w-3xl space-y-6 transition-opacity duration-1000 ease-in-out"
+          className="max-w-3xl space-y-6 transition-opacity duration-150 ease-in-out"
           data-aos="fade-up"
         >
           <span className="text-[var(--mint)] font-bold tracking-[0.3em] uppercase text-xs sm:text-sm font-sans">

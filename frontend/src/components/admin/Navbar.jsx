@@ -26,6 +26,7 @@ const Navbar = () => {
   }
 
   const navItems = useMemo(() => ([
+    { label: 'HOME', path: '/' },
     { label: 'DASHBOARD', path: isAdmin ? '/admin/dashboard' : '/admin/doctor-dashboard' },
     { label: 'APPOINTMENTS', path: isAdmin ? '/admin/appointments' : '/admin/doctor-appointments' },
     ...(isAdmin ? [
