@@ -8,7 +8,7 @@ const DoctorCard = ({ _id, image, name, speciality, about, delay }) => {
   return (
     <div 
       onClick={() => { navigate(`/appointment/${_id}`); window.scrollTo(0, 0) }}
-      className="group bg-white p-8 rounded-[2rem] shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(168,213,186,0.4)] text-center border border-white/50 cursor-pointer"
+      className="group bg-[var(--card-bg)] p-8 rounded-[2rem] shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(168,213,186,0.4)] dark:hover:shadow-[0_20px_40px_rgba(173,235,179,0.15)] text-center border border-[var(--card-bg)] cursor-pointer"
       data-aos="fade-up"
       data-aos-delay={delay}
     >
@@ -21,7 +21,7 @@ const DoctorCard = ({ _id, image, name, speciality, about, delay }) => {
         />
       </div>
 
-      <h3 className="text-xl font-bold text-[var(--deep-dark)] mb-1 font-serif">
+      <h3 className="text-xl font-bold text-[var(--text-dark)] mb-1 font-serif">
         {name}
       </h3>
       
@@ -33,7 +33,7 @@ const DoctorCard = ({ _id, image, name, speciality, about, delay }) => {
         "{about}"
       </p>
       
-      <div className="inline-flex items-center gap-2 text-[var(--mint-dark)] text-sm font-bold uppercase tracking-widest transition-colors duration-300 group-hover:text-[var(--dark-green)]">
+      <div className="inline-flex items-center gap-2 text-[var(--mint-dark)] text-sm font-bold uppercase tracking-widest transition-colors duration-300 group-hover:text-[var(--deep-dark)]">
         View Profile
         <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
       </div>
@@ -45,7 +45,7 @@ const DoctorsSection = () => {
   const { doctors } = useContext(AppContext)
 
   return (
-    <section id="doctors" className="py-24 bg-[var(--mint-light)] overflow-hidden">
+    <section id="doctors" className="py-24 bg-[var(--mint-bg)] overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 md:px-10 lg:px-16">
         
         {/* SECTION HEADING */}
@@ -53,7 +53,7 @@ const DoctorsSection = () => {
           <span className="text-[var(--mint-dark)] font-bold tracking-[0.2em] uppercase text-xs">
             Our Network
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-[var(--deep-dark)] font-serif leading-tight">
+          <h2 className="text-4xl md:text-5xl font-bold text-[var(--text-dark)] font-serif leading-tight">
             Find Your Perfect Doctor
           </h2>
           <p className="text-[var(--text-muted)] text-lg max-w-2xl mx-auto">

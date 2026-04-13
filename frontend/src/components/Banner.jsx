@@ -11,7 +11,7 @@ const Banner = () => {
             <div className='flex bg-gradient-to-r from-primary to-accent rounded-xl px-6 sm:px-10 md:px-14 lg:px-12'>
                 {/* ------- Left Side ------- */}
                 <div className='flex-1 py-8 sm:py-10 md:py-16 lg:py-24 lg:pl-5'>
-                    <div className='text-xl sm:text-2xl md:text-3xl lg:text-5xl font-bold text-white'>
+                    <div className='text-xl sm:text-2xl md:text-3xl lg:text-5xl font-bold text-white font-decorative'>
                         <p>Book Appointment</p>
                         <p className='mt-4'>With 100+ Trusted Doctors</p>
                     </div>

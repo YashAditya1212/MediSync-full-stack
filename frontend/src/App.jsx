@@ -47,7 +47,7 @@ const App = () => {
     <div className='relative'>
       {!isLoginPage && !isJoinPage && !isAdminRoute && <Navbar />}
       {isAdminRoute && <AdminNavbar />}
-      <div className={`relative z-10 ${isAdminRoute ? 'pt-20' : needsPadding ? 'pt-28' : ''}`}>
+      <div className={`relative z-10 ${isAdminRoute ? 'pt-20' : needsPadding ? 'max-w-7xl mx-auto px-6 md:px-10 lg:px-16 pt-32' : ''}`}>
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/doctors' element={<Doctors />} />

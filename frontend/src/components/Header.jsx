@@ -29,12 +29,12 @@ const Header = () => {
           className="space-y-6 max-w-4xl"
           data-aos="fade-down"
         >
-          <div className="inline-flex items-center gap-2 rounded-full bg-white/10 backdrop-blur-md text-white px-5 py-2 text-[10px] font-bold tracking-[0.3em] uppercase border border-white/20">
+          <div className="inline-flex items-center gap-2 rounded-full bg-white/10 backdrop-blur-md text-white px-5 py-2 text-[10px] font-bold tracking-[0.3em] uppercase border border-white/20 font-accent">
             <span className="w-1.5 h-1.5 rounded-full bg-[var(--mint)] animate-pulse" />
             Trusted Healthcare Since 2005
           </div>
 
-          <h1 className="text-5xl sm:text-7xl lg:text-[90px] leading-[1] text-white font-bold drop-shadow-2xl">
+          <h1 className="text-5xl sm:text-7xl lg:text-[90px] leading-[1] text-white font-bold drop-shadow-2xl font-decorative">
             Your Health, <br /> Synced Across Every Hospital
           </h1>
           

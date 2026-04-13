@@ -94,7 +94,7 @@ const Navbar = () => {
         <div className='flex items-center gap-3'>
           <img
             onClick={() => navigate('/')}
-            className={`w-36 md:w-40 cursor-pointer transition-all duration-300 hover:opacity-80 ${!showSolidNavbar ? 'brightness-0 invert' : 'dark:brightness-0 dark:invert'}`}
+            className="w-36 md:w-40 cursor-pointer transition-all duration-300 hover:opacity-80"
             src={assets.logo}
             alt="MediSync"
           />

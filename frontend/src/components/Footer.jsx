@@ -11,7 +11,7 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-6 md:px-10 lg:px-16 pt-32 pb-16 border-b border-white/5">
         <div className="flex flex-col md:flex-row items-center justify-between gap-10">
           <div className="space-y-4 text-center md:text-left">
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-white leading-tight">
+            <h2 className="text-3xl md:text-4xl font-serif font-bold text-white leading-tight font-decorative">
               Ready to <span className="text-[var(--mint)] italic">experience</span> better <br className="hidden md:block" /> healthcare management?
             </h2>
             <p className="text-[#5A7A62] max-w-lg text-sm md:text-base">

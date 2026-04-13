@@ -30,6 +30,8 @@ export default {
       fontFamily: {
         'sans': ['Outfit', 'sans-serif'],
         'display': ['Playfair Display', 'serif'],
+        'decorative': ['Cormorant Garamond', 'serif'],
+        'accent': ['DM Serif Display', 'serif'],
       },
       boxShadow: {
         'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',

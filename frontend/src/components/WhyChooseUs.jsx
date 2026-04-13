@@ -57,7 +57,7 @@ const WhyChooseUs = () => {
               <span className="text-[var(--mint-dark)] font-bold tracking-[0.2em] uppercase text-xs">
                 Why Choose Us
               </span>
-              <h2 className="text-4xl md:text-5xl font-bold text-[var(--deep-dark)] leading-tight font-serif">
+              <h2 className="text-4xl md:text-5xl font-bold text-[var(--deep-dark)] leading-tight font-decorative">
                 Care That Goes Beyond Medicine
               </h2>
             </div>
