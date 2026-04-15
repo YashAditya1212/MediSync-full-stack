@@ -1,33 +1,24 @@
-import axios from "axios";
 import { createContext, useState } from "react";
 import { toast } from "react-toastify";
+import api from "../lib/axios";
 
 
 export const AdminContext = createContext()
 
 const AdminContextProvider = (props) => {
 
-    const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:4002'
-
-    const [aToken, setAToken] = useState(localStorage.getItem('aToken') ? localStorage.getItem('aToken') : '')
+    const [aToken, setAToken] = useState(localStorage.getItem('adminToken') ? localStorage.getItem('adminToken') : '')
 
     const [appointments, setAppointments] = useState([])
     const [doctors, setDoctors] = useState([])
     const [dashData, setDashData] = useState(false)
-
-    // support functions to get latest config with current token
-    const getConfig = () => ({
-        headers: {
-            atoken: aToken
-        }
-    })
 
     // Getting all Doctors data from Database using API
     const getAllDoctors = async () => {
 
         try {
 
-            const { data } = await axios.get(backendUrl + '/api/admin/all-doctors', getConfig())
+            const { data } = await api.get('/api/admin/all-doctors')
             if (data.success) {
                 setDoctors(data.doctors)
             } else {
@@ -44,7 +35,7 @@ const AdminContextProvider = (props) => {
     const changeAvailability = async (docId) => {
         try {
 
-            const { data } = await axios.post(backendUrl + '/api/admin/change-availability', { docId }, getConfig())
+            const { data } = await api.post('/api/admin/change-availability', { docId })
             if (data.success) {
                 toast.success(data.message)
                 getAllDoctors()
@@ -64,7 +55,7 @@ const AdminContextProvider = (props) => {
 
         try {
 
-            const { data } = await axios.get(backendUrl + '/api/admin/appointments', getConfig())
+            const { data } = await api.get('/api/admin/appointments')
             if (data.success) {
                 setAppointments(data.appointments.reverse())
             } else {
@@ -83,7 +74,7 @@ const AdminContextProvider = (props) => {
 
         try {
 
-            const { data } = await axios.post(backendUrl + '/api/admin/cancel-appointment', { appointmentId }, getConfig())
+            const { data } = await api.post('/api/admin/cancel-appointment', { appointmentId })
 
             if (data.success) {
                 toast.success(data.message)
@@ -103,7 +94,7 @@ const AdminContextProvider = (props) => {
     const getDashData = async () => {
         try {
 
-            const { data } = await axios.get(backendUrl + '/api/admin/dashboard', getConfig())
+            const { data } = await api.get('/api/admin/dashboard')
 
             if (data.success) {
                 setDashData(data.dashData)

@@ -2,8 +2,15 @@ import { v2 as cloudinary } from 'cloudinary';
 
 const connectCloudinary = async () => {
     try {
+        const cloudinaryUrl = process.env.CLOUDINARY_URL
+
         // Cloudinary is optional - only configure if credentials are provided
-        if (process.env.CLOUDINARY_NAME && process.env.CLOUDINARY_API_KEY && process.env.CLOUDINARY_SECRET_KEY) {
+        if (cloudinaryUrl) {
+            cloudinary.config({
+                CLOUDINARY_URL: cloudinaryUrl,
+            });
+            console.log("✅ Cloudinary configured from CLOUDINARY_URL");
+        } else if (process.env.CLOUDINARY_NAME && process.env.CLOUDINARY_API_KEY && process.env.CLOUDINARY_SECRET_KEY) {
             cloudinary.config({
                 cloud_name: process.env.CLOUDINARY_NAME,
                 api_key: process.env.CLOUDINARY_API_KEY,

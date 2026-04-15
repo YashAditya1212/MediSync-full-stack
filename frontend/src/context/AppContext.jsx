@@ -1,19 +1,18 @@
 import { createContext, useEffect, useState } from "react";
-import axios from 'axios'
 import { toast } from 'react-toastify'
 import { doctors as localDoctors } from "../assets/assets";
+import api from "../lib/axios";
 
 export const AppContext = createContext()
 
 const AppContextProvider = (props) => {
 
     const currencySymbol = import.meta.env.VITE_CURRENCY || '$'
-    const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:4002'
     const [doctors, setDoctors] = useState(localDoctors) // Start with local data as fallback
 
     const getDoctorsData = async () => {
         try {
-            const { data } = await axios.get(backendUrl + '/api/doctor/list')
+            const { data } = await api.get('/api/doctor/list')
             if (data.success) {
                 console.log("✅ Fetched doctors from backend:", data.doctors.length)
                 setDoctors(data.doctors)

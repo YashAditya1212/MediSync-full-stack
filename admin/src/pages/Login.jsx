@@ -3,6 +3,7 @@ import React, { useContext, useState } from 'react'
 import { DoctorContext } from '../context/DoctorContext'
 import { AdminContext } from '../context/AdminContext'
 import { toast } from 'react-toastify'
+import { API_BASE_URL } from '../config/api'
 
 const Login = () => {
 
@@ -11,7 +12,7 @@ const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:4002'
+  const backendUrl = API_BASE_URL
 
   const { setDToken } = useContext(DoctorContext)
   const { setAToken } = useContext(AdminContext)
@@ -29,7 +30,7 @@ const Login = () => {
         const { data } = await axios.post(backendUrl + '/api/admin/login', { email, password })
         if (data.success) {
           setAToken(data.token)
-          localStorage.setItem('aToken', data.token)
+          localStorage.setItem('adminToken', data.token)
           toast.success('Login successful!')
         } else {
           setError(data.message || 'Login failed')
@@ -39,7 +40,7 @@ const Login = () => {
         const { data } = await axios.post(backendUrl + '/api/doctor/login', { email, password })
         if (data.success) {
           setDToken(data.token)
-          localStorage.setItem('dToken', data.token)
+          localStorage.setItem('doctorToken', data.token)
           toast.success('Login successful!')
         } else {
           setError(data.message || 'Login failed')
@@ -54,9 +55,9 @@ const Login = () => {
       
       if (error.code === 'ERR_NETWORK' || error.message.includes('Network Error')) {
         console.error('💡 Make sure:')
-        console.error('   1. Backend is running on http://localhost:4000')
-        console.error('   2. .env file exists with VITE_BACKEND_URL=http://localhost:4000')
-        console.error('   3. Restart admin dev server after creating .env file')
+        console.error('   1. The backend is running')
+        console.error('   2. VITE_BACKEND_URL is set in the admin environment')
+        console.error('   3. The admin dev server was restarted after env changes')
       }
     } finally {
       setLoading(false)

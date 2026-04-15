@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import { buildApiUrl, GODSEYE_API_BASE_URL } from "../../config/api";
 
 const InputForm = () => {
   const [video, setVideo] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
   const {
     register,
     handleSubmit,
@@ -11,29 +15,33 @@ const InputForm = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
+    setSubmitError("");
+    setIsSubmitting(true);
     try {
       const formData = new FormData();
       formData.append("image", data.image[0]);
 
-      const response = await fetch(
-        "http://127.0.0.1:8080/api/v1/public/upload-video",
-        {
-          method: "POST",
-          body: formData,
-        }
+      const { data: results } = await axios.post(
+        buildApiUrl(GODSEYE_API_BASE_URL, "/api/v1/public/upload-video"),
+        formData
       );
-      const results = await response.json();
+
       if (results.status === "success") {
-        const new_api = await fetch(
-          `http://127.0.0.1:8080/api/v1/public/show-video/${results.path}`,
-          {
-            method: "GET",
-          }
+        setVideo(
+          buildApiUrl(
+            GODSEYE_API_BASE_URL,
+            `/api/v1/public/show-video/${results.path}`
+          )
         );
-        setVideo(new_api.url);
       }
     } catch (err) {
-      console.error(err);
+      console.error("Video upload failed:", err);
+      setSubmitError(
+        err?.response?.data?.message ||
+          "Video upload failed. Please verify the God's Eye API URL."
+      );
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -77,11 +85,17 @@ const InputForm = () => {
               accept="video/*"
             />
           </div>
+          {submitError && (
+            <p className="mt-4 rounded-md bg-red-50 px-4 py-3 text-sm text-red-600">
+              {submitError}
+            </p>
+          )}
           <button
             type="submit"
+            disabled={isSubmitting}
             className="mt-4 font-bold py-4 px-8 bg-primary hover:bg-primary-dark rounded-md text-white w-full transition-colors shadow-lg shadow-primary/30"
           >
-            Submit this Video
+            {isSubmitting ? "Uploading..." : "Submit this Video"}
           </button>
         </form>
       )}

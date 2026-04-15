@@ -1,11 +1,11 @@
 import { createContext, useState, useEffect } from "react";
-import axios from "axios";
+import api from "../lib/axios";
 import { AppContext } from "./AppContext";
+
 
 export const UserContext = createContext();
 
 const UserContextProvider = (props) => {
-    const { backendUrl } = props; // Get backendUrl from AppContext
     const [token, setToken] = useState(localStorage.getItem('token') || null);
     const [userData, setUserData] = useState(null);
 
@@ -18,9 +18,7 @@ const UserContextProvider = (props) => {
 
     const loadUserProfile = async () => {
         try {
-            const { data } = await axios.get(backendUrl + '/api/user/get-profile', {
-                headers: { token }
-            });
+            const { data } = await api.get('/api/user/get-profile');
             if (data.success) {
                 setUserData(data.userData);
             }

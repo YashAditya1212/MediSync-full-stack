@@ -1,15 +1,14 @@
 import { createContext, useState } from "react";
-import axios from 'axios'
 import { toast } from 'react-toastify'
+import api from "../lib/axios";
 
 
 export const DoctorContext = createContext()
 
 const DoctorContextProvider = (props) => {
 
-    const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:4002'
+    const [dToken, setDToken] = useState(localStorage.getItem('doctorToken') ? localStorage.getItem('doctorToken') : '')
 
-    const [dToken, setDToken] = useState(localStorage.getItem('dToken') ? localStorage.getItem('dToken') : '')
     const [appointments, setAppointments] = useState([])
     const [dashData, setDashData] = useState(false)
     const [profileData, setProfileData] = useState(false)
@@ -18,7 +17,7 @@ const DoctorContextProvider = (props) => {
     const getAppointments = async () => {
         try {
 
-            const { data } = await axios.get(backendUrl + '/api/doctor/appointments', { headers: { dtoken: dToken } })
+            const { data } = await api.get('/api/doctor/appointments')
 
             if (data.success) {
                 setAppointments(data.appointments.reverse())
@@ -36,8 +35,7 @@ const DoctorContextProvider = (props) => {
     const getProfileData = async () => {
         try {
 
-            const { data } = await axios.get(backendUrl + '/api/doctor/profile', { headers: { dtoken: dToken } })
-            console.log(data.profileData)
+            const { data } = await api.get('/api/doctor/profile')
             setProfileData(data.profileData)
 
         } catch (error) {
@@ -51,7 +49,7 @@ const DoctorContextProvider = (props) => {
 
         try {
 
-            const { data } = await axios.post(backendUrl + '/api/doctor/cancel-appointment', { appointmentId }, { headers: { dtoken: dToken } })
+            const { data } = await api.post('/api/doctor/cancel-appointment', { appointmentId })
 
             if (data.success) {
                 toast.success(data.message)
@@ -74,7 +72,7 @@ const DoctorContextProvider = (props) => {
 
         try {
 
-            const { data } = await axios.post(backendUrl + '/api/doctor/complete-appointment', { appointmentId }, { headers: { dtoken: dToken } })
+            const { data } = await api.post('/api/doctor/complete-appointment', { appointmentId })
 
             if (data.success) {
                 toast.success(data.message)
@@ -96,7 +94,7 @@ const DoctorContextProvider = (props) => {
     const getDashData = async () => {
         try {
 
-            const { data } = await axios.get(backendUrl + '/api/doctor/dashboard', { headers: { dtoken: dToken } })
+            const { data } = await api.get('/api/doctor/dashboard')
 
             if (data.success) {
                 setDashData(data.dashData)
@@ -112,7 +110,7 @@ const DoctorContextProvider = (props) => {
     }
 
     const value = {
-        dToken, setDToken, backendUrl,
+        dToken, setDToken,
         appointments,
         getAppointments,
         cancelAppointment,
