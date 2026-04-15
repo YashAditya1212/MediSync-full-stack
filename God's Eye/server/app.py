@@ -2,7 +2,7 @@ from flask import request, Response, Flask, jsonify, session, send_from_director
 from flask_cors import CORS
 from blueprints.auth.auth import auth_bp
 from blueprints.accident.accident import accident_bp
-from blueprints.public.public import public_bp
+from blueprints.public.public import public_bp, HAS_AI_LIBS
 from blueprints.emails.emails import emails
 from extensions import mail
 
@@ -25,7 +25,12 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+# Log Mock AI Mode Warning
+if not HAS_AI_LIBS:
+    logger.warning("⚠️  Running in MOCK AI mode. Heavy dependencies (opencv, ultralytics) are missing or disabled.")
+
 # MongoDB connection with error handling
+db_connected = False
 try:
     mongodb_uri = os.getenv('MONGODB_URI') or os.getenv('MONGO_URI')
     if not mongodb_uri:
@@ -35,6 +40,7 @@ try:
     # Test the connection
     client.server_info()
     mongo_db = client.flask_database
+    db_connected = True
     logger.info("✅ MongoDB connection successful")
 except Exception as e:
     logger.error(f"❌ MongoDB connection failed: {e}")
@@ -69,9 +75,11 @@ CORS(app, origins=allowed_origins, supports_credentials=True)
 @app.route('/health')
 def health_check():
     return jsonify({
-        "status": "healthy",
+        "status": "healthy" if db_connected else "degraded",
         "service": "God's Eye AI API",
         "version": "1.0.0",
+        "ai_enabled": HAS_AI_LIBS,
+        "database_connected": db_connected,
         "timestamp": datetime.datetime.now().isoformat(),
         "uptime": "Service is running"
     }), 200

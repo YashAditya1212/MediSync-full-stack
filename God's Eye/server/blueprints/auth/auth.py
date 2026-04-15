@@ -1,12 +1,13 @@
+import os
 import hashlib
+import logging
 from flask import Blueprint, jsonify, request
 from flask_cors import cross_origin
 from bson import ObjectId
 from flask_jwt_extended import create_access_token
 from pymongo import MongoClient
-
-import os
 from dotenv import load_dotenv
+
 load_dotenv()
 
 auth_bp = Blueprint('auth', __name__, url_prefix='/api/v1/auth')
@@ -23,7 +24,6 @@ users_collection = mongo_db.users
 # Route for the user to login...
 @auth_bp.route('/login', methods=['POST', 'OPTIONS'])
 @cross_origin(supports_credentials=True)
-# Line 19-30 - Replace the login function with:
 def login():
     login_details = request.get_json()
     
@@ -33,15 +33,15 @@ def login():
     
     user_from_db = users_collection.find_one({'username': login_details['username']})
     if user_from_db:
-        print("🔥")
         encrypted_password = hashlib.sha256(login_details['password'].encode('utf-8')).hexdigest()
         if encrypted_password == user_from_db['password']:
             access_token = create_access_token(identity=user_from_db['username'])
+            logging.info(f"User logged in: {login_details['username']}")
             return jsonify(access_token=access_token), 200
         else:
             return jsonify({'msg': 'The username or password is incorrect'}), 401
     else:
-        return jsonify({'msg': "User does not exist"}), 401  # Changed from 404 to 401
+        return jsonify({'msg': "User does not exist"}), 401
 
 # Route for the user to register...
 @auth_bp.route('/register', methods=['POST', 'OPTIONS'])
