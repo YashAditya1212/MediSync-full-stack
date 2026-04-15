@@ -1,0 +1,60 @@
+# ============================================
+# Flask Configuration
+# ============================================
+# Secret key for Flask sessions and security
+# Generate a random string for production (e.g., use: python -c "import secrets; print(secrets.token_hex(32))")
+FLASK_SECRET_KEY=dev-secret-key-change-this-in-production
+
+# Flask environment (development, production, testing)
+FLASK_ENV=development
+
+# ============================================
+# JWT Configuration
+# ============================================
+# Secret key for JWT token generation and validation
+# Generate a random string for production (e.g., use: python -c "import secrets; print(secrets.token_hex(32))")
+JWT_SECRET_KEY=your-jwt-secret-key-here-change-this-in-production
+
+# ============================================
+# MongoDB Configuration
+# ============================================
+# MongoDB connection URI
+# For local MongoDB: mongodb://localhost:27017/
+# For MongoDB Atlas: mongodb+srv://username:password@cluster.mongodb.net/
+# Default: mongodb://localhost:27017/
+MONGODB_URI=mongodb://localhost:27017/
+
+# ============================================
+# Email Configuration (Gmail)
+# ============================================
+# Your Gmail address for sending accident alert emails
+EMAIL=your-email@gmail.com
+
+# Gmail App Password (NOT your regular Gmail password)
+# How to get App Password:
+# 1. Go to Google Account settings (https://myaccount.google.com/)
+# 2. Enable 2-Step Verification if not already enabled
+# 3. Go to Security > App passwords
+# 4. Generate a new app password for "Mail"
+# 5. Use the 16-character password generated here
+PASSWORD=your-gmail-app-password-here
+
+# Email address to receive accident alerts
+SENDTO=recipient-email@gmail.com
+
+# ============================================
+# Cloudinary Configuration
+# ============================================
+# Cloudinary is used for storing accident frame images
+# Sign up at: https://cloudinary.com/users/register/free
+# Get credentials from: https://console.cloudinary.com/settings/api-keys
+
+# Your Cloudinary cloud name (found in Dashboard)
+CLOUD_NAME=your-cloudinary-cloud-name
+
+# Your Cloudinary API Key (found in Dashboard > API Keys)
+API_KEY=your-cloudinary-api-key
+
+# Your Cloudinary API Secret (found in Dashboard > API Keys)
+API_SECRET=your-cloudinary-api-secret
+

@@ -1,0 +1,23 @@
+# ============================================
+# Backend API URL
+# ============================================
+# The base URL for your Flask backend API
+# Default: http://127.0.0.1:8080
+NEXT_PUBLIC_BACKEND_URL=http://127.0.0.1:8080
+
+# ============================================
+# Email Configuration (Gmail)
+# ============================================
+# Your Gmail address for sending emails from the frontend
+# Used for sending quick mail notifications to rescue teams
+EMAIL=your-email@gmail.com
+
+# Gmail App Password (NOT your regular Gmail password)
+# How to get App Password:
+# 1. Go to Google Account settings (https://myaccount.google.com/)
+# 2. Enable 2-Step Verification if not already enabled
+# 3. Go to Security > App passwords
+# 4. Generate a new app password for "Mail"
+# 5. Use the 16-character password generated here
+EMAIL_PASS=your-gmail-app-password-here
+
